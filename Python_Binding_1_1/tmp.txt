@@ -1,0 +1,66 @@
+server=http://api.wolframalpha.com/v1/query.jsp
+input=Who%20is%20the%20president%20of%20USA%3F&appid=RX4H49-LR986EXTXL&scantimeout=3.0&podtimeout=4.0&formattimeout=8.0&async=False&podtitle=&podindex=&podscanner=&podstate=&assumption=
+
+<type 'str'> xml= <?xml version='1.0' encoding='UTF-8'?>
+<queryresult success='true'
+    error='false'
+    numpods='0'
+    datatypes='Country,Leader,Person'
+    timedout=''
+    timedoutpods=''
+    timing='1.403'
+    parsetiming='0.448'
+    parsetimedout='false'
+    recalculate=''
+    id='MSP343820hfee6846cc77fg000022h6i5e8e851icgh'
+    host='https://www5a.wolframalpha.com'
+    server='55'
+    related='https://www5a.wolframalpha.com/api/v1/relatedQueries.jsp?id=MSPa343920hfee6846cc77fg00004ig9ee93i02e2b2a1470601768739347399'
+    version='2.6'>
+ <userinfoused count='1'>
+  <userinfo name='TimeZone' />
+ </userinfoused>
+ <sources count='3'>
+  <source url='https://www5a.wolframalpha.com/sources/CountryDataSourceInformationNotes.html'
+      text='Country data' />
+  <source url='https://www5a.wolframalpha.com/sources/LeaderDataSourceInformationNotes.html'
+      text='Leader data' />
+  <source url='https://www5a.wolframalpha.com/sources/PeopleDataSourceInformationNotes.html'
+      text='People data' />
+ </sources>
+</queryresult>
+
+<type 'str'> json= ["queryresult", ["parsetimedout", "false"], ["success", "true"], ["timedoutpods", ""], ["parsetiming", "0.448"], ["id", "MSP343820hfee6846cc77fg000022h6i5e8e851icgh"], ["timedout", ""], ["related", "https://www5a.wolframalpha.com/api/v1/relatedQueries.jsp?id=MSPa343920hfee6846cc77fg00004ig9ee93i02e2b2a1470601768739347399"], ["numpods", "0"], ["host", "https://www5a.wolframalpha.com"], ["version", "2.6"], ["error", "false"], ["timing", "1.403"], ["datatypes", "Country,Leader,Person"], ["server", "55"], ["recalculate", ""], ["userinfoused", ["count", "1"], ["userinfo", ["name", "TimeZone"]]], ["sources", ["count", "3"], ["source", ["url", "https://www5a.wolframalpha.com/sources/CountryDataSourceInformationNotes.html"], ["text", "Country data"]], ["source", ["url", "https://www5a.wolframalpha.com/sources/LeaderDataSourceInformationNotes.html"], ["text", "Leader data"]], ["source", ["url", "https://www5a.wolframalpha.com/sources/PeopleDataSourceInformationNotes.html"], ["text", "People data"]]]]
+
+<type 'list'> tree= [u'queryresult', (u'parsetimedout', u'false'), (u'success', u'true'), (u'timedoutpods', u''), (u'parsetiming', u'0.448'), (u'id', u'MSP343820hfee6846cc77fg000022h6i5e8e851icgh'), (u'timedout', u''), (u'related', u'https://www5a.wolframalpha.com/api/v1/relatedQueries.jsp?id=MSPa343920hfee6846cc77fg00004ig9ee93i02e2b2a1470601768739347399'), (u'numpods', u'0'), (u'host', u'https://www5a.wolframalpha.com'), (u'version', u'2.6'), (u'error', u'false'), (u'timing', u'1.403'), (u'datatypes', u'Country,Leader,Person'), (u'server', u'55'), (u'recalculate', u''), [u'userinfoused', (u'count', u'1'), [u'userinfo', (u'name', u'TimeZone')]], [u'sources', (u'count', u'3'), [u'source', (u'url', u'https://www5a.wolframalpha.com/sources/CountryDataSourceInformationNotes.html'), (u'text', u'Country data')], [u'source', (u'url', u'https://www5a.wolframalpha.com/sources/LeaderDataSourceInformationNotes.html'), (u'text', u'Leader data')], [u'source', (u'url', u'https://www5a.wolframalpha.com/sources/PeopleDataSourceInformationNotes.html'), (u'text', u'People data')]]]
+
+<type 'list'> issuccess= [u'true']
+
+<type 'list'> iserror= [u'false']
+
+<type 'list'> numpods= [u'0']
+
+<type 'list'> datatypes= [u'Country,Leader,Person']
+
+<type 'list'> timedoutscanners= [u'']
+
+<type 'list'> timing= [u'1.403']
+
+<type 'list'> parsetiming= [u'0.448']
+
+<type 'list'> error= []
+
+<type 'list'> errorcode= []
+
+<type 'list'> errormessage= []
+
+<type 'list'> pods= []
+
+<type 'list'> xmlpods= []
+
+<type 'list'> assumptions= []
+
+<type 'list'> warnings= []
+
+<type 'list'> sources= [[(u'count', u'3'), [u'source', (u'url', u'https://www5a.wolframalpha.com/sources/CountryDataSourceInformationNotes.html'), (u'text', u'Country data')], [u'source', (u'url', u'https://www5a.wolframalpha.com/sources/LeaderDataSourceInformationNotes.html'), (u'text', u'Leader data')], [u'source', (u'url', u'https://www5a.wolframalpha.com/sources/PeopleDataSourceInformationNotes.html'), (u'text', u'People data')]]]
+
