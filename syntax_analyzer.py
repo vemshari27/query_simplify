@@ -174,7 +174,7 @@ def add_to_query_wh_end(state, node, add_insert):
             # print(wh_query)
             wh.add_subquery(wh_query)
             wh_query.clear()
-            state_wh.verb = 0
+            state_wh.verb = 1
             state_wh.noun = 0
 
 
@@ -251,7 +251,6 @@ prev_state = -1
 def check_state_all() :
     global prev_state
     if(check_state_when() == 1 and check_state_wh() == 0 and check_state_wh_noun() == 1 and prev_state == 1):
-
         prev_state = 0
         return [1,1]
 
@@ -316,10 +315,10 @@ def query_tree_generator(doc):
     when.add_subquery(when_query)
 
     print("printing subqueries")
-    print(pos.pos_queries) 
-    print(prep.prep_queries)
-    print(wh.wh_queries)
-    print(when.when_queries)
+    # print(pos.pos_queries) 
+    # print(prep.prep_queries)
+    # print(wh.wh_queries)
+    # print(when.when_queries)
 
     pos_queries =  copy.deepcopy(pos.pos_queries)
     prep_queries =  copy.deepcopy(prep.prep_queries)
@@ -338,8 +337,15 @@ def query_tree_generator(doc):
 def tree_creator(node, parent):
     if node.n_lefts + node.n_rights > 0:
         # PREORDER DETECTION
+
+        # print("current node " +str(node))
+
+        # print_states_prep()
+        # print_states_pos()
+        # print_states_wh()
+        # print_states_when()
+
         # PREP
-        # check_prep_end(node) 
         check_prep_in_dicts(node.orth_) 
         under_construction_prep = check_state_prep()
         add_to_query_prep_end(under_construction_prep, node.orth_, 0)
@@ -353,11 +359,6 @@ def tree_creator(node, parent):
         #WHEN
         check_when_in_dicts(node.orth_)
 
-
-        # print_states_prep()
-        # print_states_pos()
-        # print_states_wh()
-
         [tree_creator(child, node) for child in node.lefts]
         # INORDER DETECTION
 
@@ -366,6 +367,7 @@ def tree_creator(node, parent):
         # print_states_prep()
         # print_states_pos()
         # print_states_wh()
+        # print_states_when()
 
         # PREP
         found_prep_end(node.orth_) #inorder end
@@ -386,7 +388,7 @@ def tree_creator(node, parent):
         found_wh_verb(node.orth_)
         under_construction_wh = check_state_wh()
         under_construction_others, wh_type = check_state_all() # check if valid end
-        add_to_query_wh_end((under_construction_others and not wh_type), node.orth_, 0)
+        add_to_query_wh_end((under_construction_others and not wh_type), node.orth_, 1)
         add_to_query_wh(under_construction_wh, node.orth_)
 
         #WHEN
@@ -398,10 +400,6 @@ def tree_creator(node, parent):
         add_to_query_when(under_construction_when, node.orth_)
         
 
-        # print_states_prep()
-        # print_states_pos()
-        # print_states_wh()
-
         
         [tree_creator(child, node) for child in node.rights]
 
@@ -411,8 +409,12 @@ def tree_creator(node, parent):
 
         # print("current node " +str(node))
 
+        # print_states_prep()
+        # print_states_pos()
+        # print_states_wh()
+        # print_states_when()
+
         # PREP
-        # check_prep_end(node) #preorder detection
         check_prep_in_dicts(node.orth_)  #preorder detection
         found_prep_end(node.orth_) #inorder end
         under_construction_prep = check_state_prep()
@@ -431,7 +433,7 @@ def tree_creator(node, parent):
         check_wh_end(node.orth_)
         under_construction_wh = check_state_wh()
         under_construction_others, wh_type = check_state_all() # check if valid end
-        add_to_query_wh_end((under_construction_others and not wh_type), node.orth_, 0)
+        add_to_query_wh_end((under_construction_others and not wh_type), node.orth_, 1)
         add_to_query_wh(under_construction_wh, node.orth_)
         
         #WHEN
@@ -441,9 +443,7 @@ def tree_creator(node, parent):
         add_to_query_when_end((under_construction_others and wh_type), node.orth_, 1)
         add_to_query_when(under_construction_when, node.orth_)
         
-        # print_states_prep()
-        # print_states_pos()
-        # print_states_wh()
+        
         
     
 # ---------------------------------------------------------------------------------------------------
