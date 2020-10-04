@@ -431,14 +431,14 @@ def tree_creator(node, parent):
         check_wh_end(node.orth_)
         under_construction_wh = check_state_wh()
         under_construction_others, wh_type = check_state_all() # check if valid end
-        add_to_query_wh_end((under_construction_others and not wh_type), node.orth_, 0)
+        add_to_query_wh_end((under_construction_others and not wh_type), node.orth_, 1)
         add_to_query_wh(under_construction_wh, node.orth_)
         
         #WHEN
         check_when_end(node.orth_)
         under_construction_when = check_state_when()
         under_construction_others, wh_type = check_state_all() # check if valid end
-        add_to_query_when_end((under_construction_others and wh_type), node.orth_, 0)
+        add_to_query_when_end((under_construction_others and wh_type), node.orth_, 1)
         add_to_query_when(under_construction_when, node.orth_)
         
         # print_states_prep()
