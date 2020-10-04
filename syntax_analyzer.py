@@ -386,7 +386,7 @@ def tree_creator(node, parent):
         found_wh_verb(node.orth_)
         under_construction_wh = check_state_wh()
         under_construction_others, wh_type = check_state_all() # check if valid end
-        add_to_query_wh_end((under_construction_others and not wh_type), node.orth_, 1)
+        add_to_query_wh_end((under_construction_others and not wh_type), node.orth_, 0)
         add_to_query_wh(under_construction_wh, node.orth_)
 
         #WHEN
@@ -431,7 +431,7 @@ def tree_creator(node, parent):
         check_wh_end(node.orth_)
         under_construction_wh = check_state_wh()
         under_construction_others, wh_type = check_state_all() # check if valid end
-        add_to_query_wh_end((under_construction_others and not wh_type), node.orth_, 1)
+        add_to_query_wh_end((under_construction_others and not wh_type), node.orth_, 0)
         add_to_query_wh(under_construction_wh, node.orth_)
         
         #WHEN
