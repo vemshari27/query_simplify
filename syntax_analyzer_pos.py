@@ -4,6 +4,7 @@ class Syntax_Analyzer_POS:
         self.encountered_POS = 0
         
         self.dict = {}
+        self.pos_queries = []
 
 
     def syntax_analyzer_pos_detect(self, tag, node, parent): # postorder detection
@@ -23,7 +24,13 @@ class Syntax_Analyzer_POS:
                 return 1              
         
     def in_POS(self,node):
-        return self.dict.get('Key', None)
+        return self.dict.get(node, None)
+    
+    def add_subquery(self,list):
+        subquery = []
+        for i in range(len(list)):
+            subquery.append(list[i])
+        self.pos_queries.append(subquery)
 
     def dict_update(self,key,node) :
         if(key in self.dict.keys()):

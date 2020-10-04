@@ -6,6 +6,7 @@ class Syntax_Analyzer_IN:
         self.noun_end = 0
         self.end_string = ""
         self.dict = {}
+        self.prep_queries = []
 
 
 
@@ -52,9 +53,16 @@ class Syntax_Analyzer_IN:
                 self.noun_end = 1
                 self.end_string = node
                 
-    def in_PREP(self,node):
-        return self.dict.get('Key', None)
+    def in_PREP(self,key):
+        return self.dict.get(key,None)
 
+    def add_subquery(self,list):
+        subquery = []
+        for i in range(len(list)):
+            subquery.append(list[i])
+        self.prep_queries.append(subquery)
+
+    
     def dict_update(self,key,node) :
         if(key in self.dict.keys()):
             list = self.dict.get(key)
