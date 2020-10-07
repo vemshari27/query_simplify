@@ -68,7 +68,7 @@ def input_sentences():
     start = time.process_time()
     qt = sentence_parser(sentences)
     print("Parser Time Elapsed : " + str(time.process_time() - start))
-    return qt    
-
+    return qt
+    
 if __name__ == "__main__":
     input_sentences()

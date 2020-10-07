@@ -19,8 +19,12 @@ def progressive_searcher(qt):
         #     sub_query = sub_query[tmp:]
         #     check = False
 
-        print(sub_query+' '+prev_res)
-        result = search_engine.search(sub_query+' ' +prev_res)
+        if words[0] == "'s":
+            print(prev_res+sub_query)
+            result = search_engine.search(prev_res+sub_query)
+        else:
+            print(sub_query+' '+prev_res)
+            result = search_engine.search(sub_query+' ' +prev_res)
         print(result)
         final_result = result
         

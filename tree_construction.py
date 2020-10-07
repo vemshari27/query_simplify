@@ -27,7 +27,7 @@ def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
             type_array[i]["ind"] = 0
 
 
-    curr_ind = 0
+    curr_ind = 1
     curr_type = 0
     token = sent[0]
     curr_q = token.text
@@ -43,53 +43,69 @@ def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
                 check = True
                 curr_type = i
         i += 1
-    # print(type_array)
-    # print(curr_type)
 
-    # when_encountered = 0
-    # chain2 =[]
-    # if curr_type == 3:
-    #     when_encountered = 1
-        
+    pos_query = []
+    pos_encountered = False
     for token in sent[1:]:
+        print(token)
         i=0
         check=False
+
+        if pos_encountered:
+            type_ = type_array[0]
+            if type_['ind']-1 in type_['end_points'] and (type_['ind'] == len(type_['words']) or type_['words'][type_['ind']] != '-'):
+                pos_encountered = False
+                pos_query.reverse()
+                chain.extend(pos_query)
+            else:
+                if type_['ind']-1 in type_['end_points']:
+                    type_['ind'] += 2
+                if token.text == "'s":
+                    curr_q += token.text
+                else:
+                    curr_q += ' ' + token.text
+                if type_['ind'] in type_['end_points']:
+                    pos_query.append(curr_q)
+                    curr_q = ""
+            print(pos_query, curr_q)
+
         for type_ in type_array:
             if type_['ind'] == -1 or type_['ind'] >= len(type_['words']):
                 i += 1
                 continue
-            if type_['words'][type_['ind']] == token.text:
-                if not check:
+
+            if type_['words'][type_['ind']] == token.text and (type_['ind'] in type_['end_points'] or type_['words'][type_['ind']+1] == sent[curr_ind+1].text):
+                if not pos_encountered and not check:
                     if curr_type != i:
+                        if i==0:
+                            pos_encountered=True
                         if len(curr_q) != 0:
-                            # if when_encountered == 1:
-                            #     chain2.append(curr_q)
-                            #     if i == 2:
-                            #         when_encountered = 2
-                            # else:
                             chain.append(curr_q)
-                        # if when_encountered == 1 and i==2:
-                        #     when_encountered=2
                         curr_q = token.text
                         curr_type = i
                     elif type_['ind'] in type_['end_points']:
-                        curr_q += ' '+token.text
-                        # if when_encountered == 1:
-                        #     chain2.append(curr_q)
+                        # if i==0:
+                        #     pos_encountered = 2
+                        #     curr_q += ' '+token.text
                         # else:
+                        curr_q += ' '+token.text
                         chain.append(curr_q)
                         curr_q = ''
                     else:
+                        # if i==0:
+                        #     pos_encountered=1
                         curr_q += ' '+token.text
                     check = True
                 type_['ind'] += 1
             i += 1
+        curr_ind += 1
 
         # print_state(type_array, curr_type, curr_q, chain)
 
-        # if when_encountered == 2:
-        #     chain.extend(chain2)
-    
+    if len(pos_query) != 0:
+        pos_query.reverse()
+        chain.extend(pos_query)
+
     print(chain)
 
     return chain
