@@ -174,7 +174,7 @@ def add_to_query_wh_end(state, node, add_insert):
             # print(wh_query)
             wh.add_subquery(wh_query)
             wh_query.clear()
-            state_wh.verb = 0
+            state_wh.verb = 1
             state_wh.noun = 0
 
 
@@ -345,7 +345,6 @@ def tree_creator(node, parent):
         add_to_query_prep_end(under_construction_prep, node.orth_, 0)
 
         # POS
-        
 
         # WH
         check_wh_in_dicts(node.orth_)
