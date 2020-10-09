@@ -1,6 +1,7 @@
 import spacy
 
 from querytree import input_sentences
+from query_tree import Query, QueryTree
 from progressive_searcher import progressive_searcher
 
 def app():

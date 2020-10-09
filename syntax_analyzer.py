@@ -1,4 +1,4 @@
-
+from query_tree import Query, QueryTree
 from syntax_analyzer_pos import *
 from syntax_analyzer_in import *
 from syntax_analyzer_wh import *
@@ -331,8 +331,8 @@ def query_tree_generator(doc):
     # print(when_queries)
 
     # tree_construction(doc)
-    chain = tree_construction(doc, pos.pos_queries, prep.prep_queries, wh.wh_queries, when.when_queries)
-    return chain
+    qt = tree_construction(doc, pos.pos_queries, prep.prep_queries, wh.wh_queries, when.when_queries)
+    return qt
 
 
 

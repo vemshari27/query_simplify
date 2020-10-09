@@ -8,7 +8,7 @@ def progressive_searcher(qt):
     prev_res = ""
     final_result = ""
     for sub_query in qt[::-1]:
-        words = sub_query.split(' ')
+        words = sub_query.lstrip(' ').rstrip(' ').split(' ')
 
         if words[0] in wh_words.keys() and words[1] in ['was', 'were', 'is', 'are', 'will', 'would', 'did', 'do']:
             final_result = prev_res

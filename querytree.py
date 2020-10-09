@@ -4,6 +4,7 @@ from nltk import Tree
 import time
 from syntax_analyzer import *
 from tree_construction import tree_construction
+from query_tree import Query, QueryTree
 
 en_nlp = spacy.load('en')
 # contextualSpellCheck.add_to_pipe(en_nlp)

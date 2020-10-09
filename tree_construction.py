@@ -1,5 +1,6 @@
 # def tree_construction(doc):
 import spacy
+from query_tree import Query, QueryTree
 # from syntax_analyzer import *
 
 def print_state(type_array, curr_type, curr_q, chain):
@@ -47,7 +48,7 @@ def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
     pos_query = []
     pos_encountered = False
     for token in sent[1:]:
-        print(token)
+        # print(token)
         i=0
         check=False
 
@@ -57,6 +58,7 @@ def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
                 pos_encountered = False
                 pos_query.reverse()
                 chain.extend(pos_query)
+                pos_query = []
             else:
                 if type_['ind']-1 in type_['end_points']:
                     type_['ind'] += 2
@@ -67,7 +69,7 @@ def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
                 if type_['ind'] in type_['end_points']:
                     pos_query.append(curr_q)
                     curr_q = ""
-            print(pos_query, curr_q)
+            # print(pos_query, curr_q)
 
         for type_ in type_array:
             if type_['ind'] == -1 or type_['ind'] >= len(type_['words']):
