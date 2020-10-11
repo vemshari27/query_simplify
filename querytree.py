@@ -50,9 +50,9 @@ def syntax_check(node, parent):
 
 def sentence_parser(sentences): 
     doc = en_nlp(sentences)
-    # [to_nltk_tree(sent.root).pretty_print() for sent in doc.sents]
+    [to_nltk_tree(sent.root).pretty_print() for sent in doc.sents]
     query_detection(doc)
-    # print_syntax_analyzer()
+    print_syntax_analyzer()
     return query_tree_generator(doc)
     # print(doc._.outcome_spellCheck)
 

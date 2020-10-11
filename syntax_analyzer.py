@@ -665,8 +665,7 @@ def query_tree_generator(doc):
 
     return str(pos_queries) + " " + str(prep_queries) + " " + str(wh_queries) + " " + str(when_queries)
 
-    # return tree_construction(doc)
-    # return progressive search
+    # tree_construction(doc)
 
 
 
