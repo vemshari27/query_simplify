@@ -1,15 +1,16 @@
 # def tree_construction(doc):
 import spacy
-from query_tree import Query, QueryTree
+from query_tree import Query, QueryTree, print_qt
 # from syntax_analyzer import *
 
-def print_state(type_array, curr_type, curr_q, chain):
+def print_state(type_array, curr_type, curr_q, qt, cn):
     for type_ in type_array:
         print(type_['ind'])
     print('**variables**')
     print(curr_q)
     print(curr_type)
-    print(chain)
+    print(cn.node)
+    print_qt(qt)
 
 def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
     # print(type(prep_qs[0][0]))
@@ -19,7 +20,8 @@ def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
     if wh_qs[-1][-1] == 'when':
         wh_qs[-1].pop(-1)
 
-    chain = []
+    # chain = []
+    qt = QueryTree()
     prefixes = []
     prev_word=''
 
@@ -38,6 +40,7 @@ def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
         if len(type_array[i]['words']) > 0:
             type_array[i]["ind"] = 0
 
+    curr_node = qt
     curr_ind = 1
     pre_ind = 0
     curr_type = 0
@@ -56,7 +59,7 @@ def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
                 curr_type = i
         i += 1
 
-    pos_query = []
+    pos_node = None
     pos_encountered = False
     for token in sent[1:]:
         # print(token)
@@ -67,9 +70,8 @@ def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
             type_ = type_array[0]
             if type_['ind']-1 in type_['end_points'] and (type_['ind'] == len(type_['words']) or type_['words'][type_['ind']] != '-'):
                 pos_encountered = False
-                pos_query.reverse()
-                chain.extend(pos_query)
-                pos_query = []
+                curr_node = curr_node.right_child
+                # pos_node = None
             else:
                 if type_['ind']-1 in type_['end_points']:
                     type_['ind'] += 2
@@ -78,9 +80,12 @@ def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
                 else:
                     curr_q += ' ' + token.text
                 if type_['ind'] in type_['end_points']:
-                    pos_query.append(curr_q)
+                    # if curr_node.node.type_ != 0:
+                    #     curr_node = curr_node.add_right_child(Query(curr_q, 0))
+                    #     pos_node = curr_node
+                    # else:
+                    curr_node.add_right_child(Query(curr_q, 0))
                     curr_q = ""
-            # print(pos_query, curr_q)
 
         for type_ in type_array:
             if type_['ind'] == -1 or type_['ind'] >= len(type_['words']):
@@ -94,47 +99,41 @@ def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
                             pos_encountered=True
                         if len(curr_q) != 0:
                             if curr_type==2:
-                                # print(pre_ind)
-                                chain.append(prefixes[pre_ind]+' '+curr_q)
+                                curr_node = curr_node.add_right_child(Query(prefixes[pre_ind]+' '+curr_q, curr_type))
                                 pre_ind += 1
                             else:
-                                chain.append(curr_q)
+                                curr_node = curr_node.add_right_child(Query(curr_q, curr_type))
                         curr_q = token.text
                         curr_type = i
                     elif type_['ind'] in type_['end_points']:
-                        # if i==0:
-                        #     pos_encountered = 2
-                        #     curr_q += ' '+token.text
-                        # else:
                         curr_q += ' '+token.text
                         if curr_type==2:
-                            chain.append(prefixes[pre_ind]+' '+curr_q)
+                            curr_node = curr_node.add_right_child(Query(prefixes[pre_ind]+' '+curr_q, curr_type))
                             pre_ind += 1
                         else:
-                            chain.append(curr_q)
+                            curr_node = curr_node.add_right_child(Query(curr_q, curr_type))
                         curr_q = ''
                     else:
-                        # if i==0:
-                        #     pos_encountered=1
                         curr_q += ' '+token.text
                     check = True
                 type_['ind'] += 1
             i += 1
         curr_ind += 1
 
-        # print_state(type_array, curr_type, curr_q, chain)
+        # print_state(type_array, curr_type, curr_q, qt, curr_node)
 
-    if len(pos_query) != 0:
-        pos_query.reverse()
-        chain.extend(pos_query)
+    if pos_encountered:
+        pos_encountered = False
+        curr_node = pos_node
+        pos_node = None
 
-    print(chain)
+    # print_qt(qt)
 
-    return chain
+    return qt
 
 if __name__ == "__main__":
     en = spacy.load('en')
-    text = "who was the wife of the president of usa when gandhi was born"
+    text = "who is the president of usa"
     doc = en(text)
 
     # pos_qs = []
@@ -143,9 +142,9 @@ if __name__ == "__main__":
     # when_qs =[]
 
     pos_qs = []
-    prep_qs = [['the', 'wife', 'of'], ['the', 'president', 'of', 'usa']]
-    wh_qs = [['who', 'was', 'the', 'wife', 'of', 'the', 'president', 'of', 'usa']]
-    when_qs = [['when', 'gandhi', 'was', 'born']]
+    prep_qs = [['the', 'president', 'of', 'usa']]
+    wh_qs = [['who', 'is', 'the', 'president', 'of', 'usa']]
+    when_qs = []
 
 
     tree_construction(doc, pos_qs, prep_qs, wh_qs, when_qs)
