@@ -13,7 +13,15 @@ def print_state(type_array, curr_type, curr_q, chain):
 
 def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
     # print(type(prep_qs[0][0]))
+    for ind, i in enumerate(wh_qs[:-1]):
+        if i[-1] == wh_qs[ind+1][0] or i[-1] == 'when':
+            i.pop(-1)
+    if wh_qs[-1][-1] == 'when':
+        wh_qs[-1].pop(-1)
+
     chain = []
+    prefixes = []
+    prev_word=''
 
     type_array = [{"sub_queries":pos_qs},{"sub_queries":prep_qs},{"sub_queries":wh_qs},{"sub_queries":when_qs}]
     for i in range(4):
@@ -24,11 +32,14 @@ def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
             for j in k:
                 type_array[i]["words"].append(j)
             type_array[i]["end_points"].append(len(type_array[i]["words"])-1)
+            if i==2:
+                prefixes.append(prev_word)
+                prev_word = type_array[i]['words'][-1]
         if len(type_array[i]['words']) > 0:
             type_array[i]["ind"] = 0
 
-
     curr_ind = 1
+    pre_ind = 0
     curr_type = 0
     token = sent[0]
     curr_q = token.text
@@ -82,7 +93,12 @@ def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
                         if i==0:
                             pos_encountered=True
                         if len(curr_q) != 0:
-                            chain.append(curr_q)
+                            if curr_type==2:
+                                # print(pre_ind)
+                                chain.append(prefixes[pre_ind]+' '+curr_q)
+                                pre_ind += 1
+                            else:
+                                chain.append(curr_q)
                         curr_q = token.text
                         curr_type = i
                     elif type_['ind'] in type_['end_points']:
@@ -91,7 +107,11 @@ def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
                         #     curr_q += ' '+token.text
                         # else:
                         curr_q += ' '+token.text
-                        chain.append(curr_q)
+                        if curr_type==2:
+                            chain.append(prefixes[pre_ind]+' '+curr_q)
+                            pre_ind += 1
+                        else:
+                            chain.append(curr_q)
                         curr_q = ''
                     else:
                         # if i==0:
