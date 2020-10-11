@@ -28,26 +28,17 @@ class Syntax_Analyzer_WHEN:
     
     def syntax_analyzer_when_verb(self, tag, node, parent): #inorder detection
         if(self.when_found == 1 and self.verb_found == 0):
-            if(tag[0] == 'V' and node not in exceptions) :
-                # print("Verb encountered  " + str(node))
-                self.verb_found = 1
-                self.verb_string = node
-                if(parent.tag_[0] == 'N'):
-                    self.when_found = 0
-                    self.verb_found = 0
-                    self.dict_update(self.verb_string, parent.orth_)
-                    return 1
-                return 0
-            # elif(parent.tag_[0] == 'V'):
-            #         self.verb_found = 1
-            #         self.verb_string = parent.orth_
-        elif(self.when_found == 1 and self.verb_found == 1):
             if(tag[0] == 'V'):
-                if(parent != None and parent.tag_[0] == 'N'):
-                    self.when_found = 0
-                    self.verb_found = 0
-                    self.dict_update(parent.orth_, self.verb_string)
-                    return 1
+                if(node not in exceptions) :
+                    # print("Verb encountered  " + str(node))
+                    self.verb_found = 1
+                    self.verb_string = node
+                    return 0
+                else :
+                    if(parent.tag_[0] == 'V'):
+                        self.verb_found = 1
+                        self.verb_string = parent.orth_
+
 
     def syntax_analyzer_when_noun(self, tag, node, parent): #preorder detection
         if(self.when_found == 1 and self.verb_found == 1):
@@ -91,6 +82,18 @@ class Syntax_Analyzer_WHEN:
             print(x)
             print(self.dict[x])
 
+    def clear_queries(self):
+        self.encountered_WHEN = 0
+        self.when_found = 0
+        # self.noun_found = 0
+        self.verb_found = 0
+        # self.noun_string = ""
+        self.verb_string = ""
+        self.dict.clear()
+        self.when_queries.clear()
+
+#-------------------------------------------------------------------------------------------------------------
+
 class Syntax_Analyzer_WH:
     def __init__(self):
         self.encountered_WH = 0
@@ -120,22 +123,11 @@ class Syntax_Analyzer_WH:
                 # print("Verb encountered  " + str(node))
                 self.verb_found = 1
                 self.verb_string = node
-                if(parent.tag_[0] == 'N'):
-                    self.wh_found = 0
-                    self.verb_found = 0
-                    self.dict_update(self.verb_string, parent.orth_)
-                    return 1
                 return 0
-            # elif(parent.tag_[0] == 'V'):
-            #         self.verb_found = 1
-            #         self.verb_string = parent.orth_
-        elif(self.wh_found == 1 and self.verb_found == 1):
-            if(tag[0] == 'V'):
-                if(parent != None and parent.tag_[0] == 'N'):
-                    self.wh_found = 0
-                    self.verb_found = 0
-                    self.dict_update(parent.orth_, self.verb_string)
-                    return 1
+            else :
+                if(parent.tag_[0] == 'V'):
+                    self.verb_found = 1
+                    self.verb_string = parent.orth_
 
 
     def syntax_analyzer_wh_noun(self, tag, node, parent): #preorder detection
@@ -180,3 +172,13 @@ class Syntax_Analyzer_WH:
         for x in self.dict.keys():
             print(x)
             print(self.dict[x])
+
+    def clear_queries(self):
+        self.encountered_WH = 0
+        self.wh_found = 0
+        # self.noun_found = 0
+        self.verb_found = 0
+        # self.noun_string = ""
+        self.verb_string = ""
+        self.dict.clear()
+        self.wh_queries.clear()
