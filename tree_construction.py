@@ -14,11 +14,11 @@ def print_state(type_array, curr_type, curr_q, qt, cn):
 
 def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
     # print(type(prep_qs[0][0]))
-    for ind, i in enumerate(wh_qs[:-1]):
-        if i[-1] == wh_qs[ind+1][0] or i[-1] == 'when':
-            i.pop(-1)
-    if wh_qs[-1][-1] == 'when':
-        wh_qs[-1].pop(-1)
+    # for ind, i in enumerate(wh_qs[:-1]):
+    #     if i[-1] == wh_qs[ind+1][0] or i[-1] == 'when':
+    #         i.pop(-1)
+    # if wh_qs[-1][-1] == 'when':
+    #     wh_qs[-1].pop(-1)
 
     # chain = []
     qt = QueryTree()

@@ -57,13 +57,14 @@ def sentence_parser(sentences):
     query_detection(doc)
     print_syntax_analyzer()
     qt =  query_tree_generator(doc)
-    result = progressive_searcher(qt)
-    return result
+    result_dic = {}
+    progressive_searcher(qt, result_dic)
+    return result_dic
     # print(doc._.outcome_spellCheck)
 
 
 class Run_Search_Engine:
     def run_query_processor(sentences):
         start = time.process_time()
-        return sentence_parser(sentences['search'])
         print("Parser Time Elapsed : " + str(time.process_time() - start))
+        return sentence_parser(sentences['search'])

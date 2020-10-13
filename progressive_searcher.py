@@ -2,7 +2,7 @@ import os
 import search_engine
 from query_tree import Query, QueryTree, print_qt
 
-def progressive_searcher(qt):
+def progressive_searcher(qt, result_dic):
     if qt is None:
         return ""
     wh_words = {'what':'', 'where':'in', 'when':'in', 'who':'of', 'whom':''}
@@ -11,8 +11,8 @@ def progressive_searcher(qt):
     # prev_res = ""
     final_result = ""
     left_ans, right_ans = "", ""
-    left_ans = progressive_searcher(qt.left_child)
-    right_ans = progressive_searcher(qt.right_child)
+    left_ans = progressive_searcher(qt.left_child, result_dic)
+    right_ans = progressive_searcher(qt.right_child, result_dic)
 
     # for sub_query in qt[::-1]:
     # with node as qt.node:
@@ -44,6 +44,8 @@ def progressive_searcher(qt):
     if words[0] in wh_words.keys():
         prefix = wh_words[words[0]]
     final_result = prefix + ' ' +result
+
+    result_dic[left_ans+sub_query+' ' +right_ans] = result
 
     return final_result
 
