@@ -52,7 +52,3 @@ if __name__ == "__main__":
     query_tree = ['who is', 'the wife of', 'the president of usa', 'when gandhi was born']
     result = progressive_searcher(query_tree)
     print(result)
-
-    
-
-        

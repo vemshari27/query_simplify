@@ -82,6 +82,18 @@ class Syntax_Analyzer_WHEN:
             print(x)
             print(self.dict[x])
 
+    def clear_queries(self):
+        self.encountered_WHEN = 0
+        self.when_found = 0
+        # self.noun_found = 0
+        self.verb_found = 0
+        # self.noun_string = ""
+        self.verb_string = ""
+        self.dict.clear()
+        self.when_queries.clear()
+
+#-------------------------------------------------------------------------------------------------------------
+
 class Syntax_Analyzer_WH:
     def __init__(self):
         self.encountered_WH = 0
@@ -160,3 +172,13 @@ class Syntax_Analyzer_WH:
         for x in self.dict.keys():
             print(x)
             print(self.dict[x])
+
+    def clear_queries(self):
+        self.encountered_WH = 0
+        self.wh_found = 0
+        # self.noun_found = 0
+        self.verb_found = 0
+        # self.noun_string = ""
+        self.verb_string = ""
+        self.dict.clear()
+        self.wh_queries.clear()

@@ -44,7 +44,11 @@ class Syntax_Analyzer_POS:
         for x in self.dict.keys():
             print(x)
             print(self.dict[x])
-
+        
+    def clear_queries(self):
+        self.encountered_POS = 0
+        self.dict.clear()
+        self.pos_queries.clear()
 
         
 		

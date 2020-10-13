@@ -78,4 +78,11 @@ class Syntax_Analyzer_IN:
             print(x)
             print(self.dict[x])
 
+    def clear_queries(self):
+        self.encountered_IN = 0
+        self.noun_end = 0
+        self.end_string = ""
+        self.dict.clear()
+        self.prep_queries.clear()
+
     
