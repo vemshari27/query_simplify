@@ -11,11 +11,13 @@ def print_qt(qt):
 
 class Query:
     def __init__(self, text, type_=None):
+        # self.text = text
         self.text = text
+        self.r_text = ''
         self.type_ = type_
         self.ans = None
     def __str__(self):
-        return "{}, {}".format(self.text, self.type_)
+        return "{}-{}, {}".format(self.text, self.r_text,self.type_)
 
 
 class QueryTree:
@@ -23,6 +25,7 @@ class QueryTree:
         self.node = q
         self.left_child = lc
         self.right_child = rc
+        self.parent = None
 
     def add_left_child(self, q):
         ret = None

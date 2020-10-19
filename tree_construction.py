@@ -41,6 +41,7 @@ def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
             type_array[i]["ind"] = 0
 
     curr_node = qt
+    last_wh_node = None
     curr_ind = 1
     pre_ind = 0
     curr_type = 0
@@ -58,6 +59,8 @@ def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
                 check = True
                 curr_type = i
         i += 1
+    if curr_type == 2 or curr_type ==3:
+        last_wh_node = curr_node
 
     pos_node = None
     pos_encountered = False
@@ -103,15 +106,20 @@ def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
                                 pre_ind += 1
                             else:
                                 curr_node = curr_node.add_right_child(Query(curr_q, curr_type))
+                            if curr_type == 2 or curr_type == 3:
+                                last_wh_node = curr_node
                         curr_q = token.text
                         curr_type = i
                     elif type_['ind'] in type_['end_points']:
                         curr_q += ' '+token.text
-                        if curr_type==2:
-                            curr_node = curr_node.add_right_child(Query(prefixes[pre_ind]+' '+curr_q, curr_type))
-                            pre_ind += 1
+                        if (curr_type == 2 or curr_type == 3) and not(curr_q[0]=='w'and curr_q[1]=='h'):
+                            last_wh_node.node.r_text = curr_q
                         else:
-                            curr_node = curr_node.add_right_child(Query(curr_q, curr_type))
+                            if curr_type==2:
+                                curr_node = curr_node.add_right_child(Query(prefixes[pre_ind]+' '+curr_q, curr_type))
+                                pre_ind += 1
+                            else:
+                                curr_node = curr_node.add_right_child(Query(curr_q, curr_type))
                         curr_q = ''
                     else:
                         curr_q += ' '+token.text
@@ -126,6 +134,16 @@ def tree_construction(sent, pos_qs, prep_qs, wh_qs, when_qs):
         pos_encountered = False
         curr_node = pos_node
         pos_node = None
+    if curr_q != '':
+        if (curr_type == 2 or curr_type == 3) and not(curr_q[0]=='w'and curr_q[1]=='h'):
+            last_wh_node.node.r_text = curr_q
+        else:
+            if curr_type==2:
+                curr_node = curr_node.add_right_child(Query(prefixes[pre_ind]+' '+curr_q, curr_type))
+                pre_ind += 1
+            else:
+                curr_node = curr_node.add_right_child(Query(curr_q, curr_type))
+        
 
     # print_qt(qt)
 

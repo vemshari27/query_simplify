@@ -203,17 +203,17 @@ class State_POS:
 
     def add_left_children(self, node):
         p_query = []
-        [iterate_left(child, p_query) for child in node.lefts]
+        [self.iterate_left(child, p_query) for child in node.lefts]
     
 
     def iterate_left(self, node, p_query):
         
         if node.n_lefts + node.n_rights > 0 :
-            [iterate_left(child, p_query) for child in node.lefts]
+            [self.iterate_left(child, p_query) for child in node.lefts]
 
             self.pos_query.append(str(node))
             
-            [iterate_left(child, p_query) for child in node.rights]
+            [self.iterate_left(child, p_query) for child in node.rights]
         else :
             self.pos_query.append(str(node))
 

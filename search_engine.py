@@ -71,6 +71,7 @@ def search(q):
                     data = i['plaintext']
 
     data = data.split('(')[0].strip(' ')
+    data = data.split('|')[0].strip(' ')
     return data
 
 if __name__ == "__main__":

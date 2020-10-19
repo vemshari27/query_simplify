@@ -20,7 +20,7 @@ def progressive_searcher(qt, result_dic):
     sub_query = node.text
     words = sub_query.lstrip(' ').rstrip(' ').split(' ')
 
-    if words[0] in wh_words.keys() and words[1] in ['was', 'were', 'is', 'are', 'will', 'would', 'did', 'do']:
+    if qt.node.r_text == '' and len(words)<3 and words[0] in wh_words.keys() and (len(words)==1 or words[1] in ['was', 'were', 'is', 'are', 'will', 'would', 'did', 'do']):
         return right_ans
         # check = True
         # if words[0] in prepositions:
@@ -35,8 +35,8 @@ def progressive_searcher(qt, result_dic):
     #     print(sub_query+' '+right_ans)
     #     result = search_engine.search(sub_query+' ' +right_ans)
     # print(result)
-    print(left_ans+sub_query+' ' +right_ans)
-    result = search_engine.search(left_ans+sub_query+' ' +right_ans)
+    print(left_ans+sub_query+' ' +right_ans+' '+node.r_text)
+    result = search_engine.search(left_ans+sub_query+' ' +right_ans+' '+node.r_text)
     print(result)
     final_result = result
         
@@ -45,7 +45,7 @@ def progressive_searcher(qt, result_dic):
         prefix = wh_words[words[0]]
     final_result = prefix + ' ' +result
 
-    result_dic[left_ans+sub_query+' ' +right_ans] = result
+    result_dic[left_ans+sub_query+' ' +right_ans+' '+node.r_text] = result
 
     return final_result
 
