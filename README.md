@@ -10,6 +10,6 @@ Our work, _parsing, tree generation, and querying_ (PTGQ), is a three-step appro
 ---
 
 ## About this repository
-- main.py is to demo PTGQ. 
-- tester.py is to reproduce results
-- Each of the folders **dependencyParsing** ... contain the code of the respective step of the PTGQ process.
+- _main.py_ is to demo PTGQ. 
+- _tester.py_ is to reproduce results.
+- Each of the folders **dependencyParsing**, **keywordIdentification**, **progressiveQuerying**, **queryTreeConstruction** and **simpleQueryGeneration** contain the code of the respective step of the PTGQ process.
