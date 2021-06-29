@@ -11,5 +11,6 @@ Our work, _parsing, tree generation, and querying_ (PTGQ), is a three-step appro
 
 ## About this repository
 - _main.py_ is to demo PTGQ. 
+- For PTGQ to run search you have to add the appId provided by the Wolfram search engine API in _./progressiveQuerying/searchEngine.py_ . Moreover, you can add your own search engine API in the same file.
 - _tester.py_ is to reproduce results.
 - Each of the folders **dependencyParsing**, **keywordIdentification**, **progressiveQuerying**, **queryTreeConstruction** and **simpleQueryGeneration** contain the code of the respective step of the PTGQ process.
